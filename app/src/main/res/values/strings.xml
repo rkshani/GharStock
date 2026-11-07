@@ -14,4 +14,23 @@
     <string name="placeholder_stock">Your home stock will appear here</string>
     <string name="placeholder_medicine">Family medicines will appear here</string>
     <string name="placeholder_more">Settings and backup will appear here</string>
+
+    <!-- Seeded on first launch; users can edit or delete them later -->
+    <string-array name="default_categories">
+        <item>Grains</item>
+        <item>Dairy</item>
+        <item>Vegetables</item>
+        <item>Fruits</item>
+        <item>Spices</item>
+        <item>Snacks</item>
+        <item>Drinks</item>
+        <item>Cleaning</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="default_storage_places">
+        <item>Fridge</item>
+        <item>Freezer</item>
+        <item>Kitchen</item>
+        <item>Store Room</item>
+    </string-array>
 </resources>
