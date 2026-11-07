@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Ghar Stock</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_shopping">Shopping</string>
+    <string name="nav_stock">Stock</string>
+    <string name="nav_medicine">Medicine</string>
+    <string name="nav_more">More</string>
+
+    <!-- Placeholder screens -->
+    <string name="placeholder_home">Your dashboard will appear here</string>
+    <string name="placeholder_shopping">Your shopping lists will appear here</string>
+    <string name="placeholder_stock">Your home stock will appear here</string>
+    <string name="placeholder_medicine">Family medicines will appear here</string>
+    <string name="placeholder_more">Settings and backup will appear here</string>
+</resources>
