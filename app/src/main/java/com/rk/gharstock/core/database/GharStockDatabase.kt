@@ -3,6 +3,7 @@ package com.rk.gharstock.core.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.rk.gharstock.core.database.dao.BackupDao
 import com.rk.gharstock.core.database.dao.CategoryDao
 import com.rk.gharstock.core.database.dao.DoseLogDao
 import com.rk.gharstock.core.database.dao.FamilyMemberDao
@@ -46,6 +47,7 @@ abstract class GharStockDatabase : RoomDatabase() {
     abstract fun familyMemberDao(): FamilyMemberDao
     abstract fun medicineDao(): MedicineDao
     abstract fun doseLogDao(): DoseLogDao
+    abstract fun backupDao(): BackupDao
 
     companion object {
         const val NAME = "ghar_stock.db"
