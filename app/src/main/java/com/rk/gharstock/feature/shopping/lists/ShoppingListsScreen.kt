@@ -81,6 +81,7 @@ private fun ShoppingListsContent(
             ) {
                 items(state.lists, key = { it.list.id }) { summary ->
                     ShoppingListCard(
+                        modifier = Modifier.animateItem(),
                         summary = summary,
                         onClick = { onOpenList(summary.list.id) },
                         onRename = { onEvent(ShoppingListsEvent.RenameClicked(summary)) },
@@ -113,12 +114,13 @@ private fun ShoppingListsContent(
 
 @Composable
 private fun ShoppingListCard(
+    modifier: Modifier,
     summary: ShoppingListSummary,
     onClick: () -> Unit,
     onRename: () -> Unit,
     onDelete: () -> Unit,
 ) {
-    Card(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
+    Card(onClick = onClick, modifier = modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.padding(start = 16.dp, top = 12.dp, bottom = 16.dp),
             verticalAlignment = Alignment.CenterVertically,

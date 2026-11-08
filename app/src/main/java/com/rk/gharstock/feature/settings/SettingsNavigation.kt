@@ -1,5 +1,6 @@
 package com.rk.gharstock.feature.settings
 
+import androidx.annotation.Keep
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -12,6 +13,8 @@ import com.rk.gharstock.feature.settings.more.MoreDestination
 import com.rk.gharstock.feature.settings.more.MoreScreen
 import kotlinx.serialization.Serializable
 
+/** Kept so its serializer survives R8, as it is used in a navigation route. */
+@Keep
 enum class CatalogKind { CATEGORY, PLACE }
 
 @Serializable

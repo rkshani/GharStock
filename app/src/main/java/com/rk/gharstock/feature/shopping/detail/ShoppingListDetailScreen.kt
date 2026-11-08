@@ -159,13 +159,15 @@ private fun LazyListScope.itemSection(
     if (items.isEmpty()) return
     item(key = "header_$titleRes") { SectionHeader(stringResource(titleRes)) }
     items(items, key = { it.id }) { item ->
-        ShoppingItemRow(
-            item = item,
-            onToggle = { onEvent(ShoppingListDetailEvent.BoughtToggled(item)) },
-            onEdit = { onEvent(ShoppingListDetailEvent.EditItemClicked(item)) },
-            onDelete = { onEvent(ShoppingListDetailEvent.DeleteClicked(item)) },
-        )
-        HorizontalDivider()
+        Column(Modifier.animateItem()) {
+            ShoppingItemRow(
+                item = item,
+                onToggle = { onEvent(ShoppingListDetailEvent.BoughtToggled(item)) },
+                onEdit = { onEvent(ShoppingListDetailEvent.EditItemClicked(item)) },
+                onDelete = { onEvent(ShoppingListDetailEvent.DeleteClicked(item)) },
+            )
+            HorizontalDivider()
+        }
     }
 }
 
