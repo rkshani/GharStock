@@ -2,6 +2,10 @@ package com.rk.gharstock.core.di
 
 import com.rk.gharstock.core.database.RoomTransactionRunner
 import com.rk.gharstock.core.domain.TransactionRunner
+import com.rk.gharstock.feature.backup.data.BackupRepositoryImpl
+import com.rk.gharstock.feature.backup.data.ContentResolverDocumentStore
+import com.rk.gharstock.feature.backup.domain.BackupRepository
+import com.rk.gharstock.feature.backup.domain.DocumentStore
 import com.rk.gharstock.feature.medicine.data.FamilyMemberRepositoryImpl
 import com.rk.gharstock.feature.medicine.data.MedicineRepositoryImpl
 import com.rk.gharstock.feature.medicine.domain.FamilyMemberRepository
@@ -37,6 +41,12 @@ interface RepositoryModule {
 
     @Binds
     fun bindFamilyMemberRepository(impl: FamilyMemberRepositoryImpl): FamilyMemberRepository
+
+    @Binds
+    fun bindBackupRepository(impl: BackupRepositoryImpl): BackupRepository
+
+    @Binds
+    fun bindDocumentStore(impl: ContentResolverDocumentStore): DocumentStore
 
     @Binds
     fun bindReportRepository(impl: ReportRepositoryImpl): ReportRepository

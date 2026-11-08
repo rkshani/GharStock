@@ -47,6 +47,9 @@ object DatabaseModule {
     @Provides
     fun provideDoseLogDao(db: GharStockDatabase) = db.doseLogDao()
 
+    @Provides
+    fun provideBackupDao(db: GharStockDatabase) = db.backupDao()
+
     /** System clock in the device time zone. Injected so use cases can be tested with a fixed clock. */
     @Provides
     fun provideClock(): Clock = Clock.systemDefaultZone()

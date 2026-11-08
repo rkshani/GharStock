@@ -3,6 +3,7 @@ package com.rk.gharstock.feature.settings
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.rk.gharstock.feature.backup.BackupScreen
 import com.rk.gharstock.feature.report.ReportScreen
 import com.rk.gharstock.feature.settings.about.AboutScreen
 import com.rk.gharstock.feature.settings.catalog.ManageCatalogScreen
@@ -28,6 +29,9 @@ data object AboutRoute
 @Serializable
 data object ReportRoute
 
+@Serializable
+data object BackupRoute
+
 fun NavGraphBuilder.settingsScreens(navController: NavController) {
     composable<MoreRoute> {
         MoreScreen(
@@ -38,6 +42,7 @@ fun NavGraphBuilder.settingsScreens(navController: NavController) {
                         MoreDestination.CATEGORIES -> ManageCatalogRoute(CatalogKind.CATEGORY)
                         MoreDestination.PLACES -> ManageCatalogRoute(CatalogKind.PLACE)
                         MoreDestination.MEMBERS -> FamilyMembersRoute
+                        MoreDestination.BACKUP -> BackupRoute
                         MoreDestination.ABOUT -> AboutRoute
                     },
                 )
@@ -48,4 +53,5 @@ fun NavGraphBuilder.settingsScreens(navController: NavController) {
     composable<FamilyMembersRoute> { FamilyMembersScreen(onBack = navController::popBackStack) }
     composable<AboutRoute> { AboutScreen(onBack = navController::popBackStack) }
     composable<ReportRoute> { ReportScreen(onBack = navController::popBackStack) }
+    composable<BackupRoute> { BackupScreen(onBack = navController::popBackStack) }
 }

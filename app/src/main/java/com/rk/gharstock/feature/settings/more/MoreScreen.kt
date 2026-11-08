@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Alarm
+import androidx.compose.material.icons.outlined.Backup
 import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Info
@@ -34,7 +35,7 @@ import com.rk.gharstock.core.ui.component.rememberExactAlarmsAllowed
 import com.rk.gharstock.core.ui.component.rememberNotificationsEnabled
 
 /** Destinations reachable from the More tab. */
-enum class MoreDestination { REPORT, CATEGORIES, PLACES, MEMBERS, ABOUT }
+enum class MoreDestination { REPORT, CATEGORIES, PLACES, MEMBERS, BACKUP, ABOUT }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,6 +63,9 @@ fun MoreScreen(onOpen: (MoreDestination) -> Unit) {
                 onOpen(MoreDestination.MEMBERS)
             }
             SectionHeader(stringResource(R.string.more_section_app))
+            MoreRow(Icons.Outlined.Backup, R.string.backup_title, R.string.backup_summary) {
+                onOpen(MoreDestination.BACKUP)
+            }
             val context = LocalContext.current
             MoreRow(
                 icon = Icons.Outlined.Notifications,
