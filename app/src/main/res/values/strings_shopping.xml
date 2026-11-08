@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shopping_title">Shopping lists</string>
+    <string name="shopping_new_list">New list</string>
+    <string name="shopping_rename_list">Rename list</string>
+    <string name="shopping_list_name_label">List name (e.g. Kiryana, Sabzi)</string>
+    <string name="shopping_empty_title">No shopping lists yet</string>
+    <string name="shopping_empty_message">Create a list like Kiryana, Medical Store or Sabzi to start adding items.</string>
+    <string name="shopping_list_progress">%1$d of %2$d bought</string>
+    <string name="shopping_list_empty_items">No items</string>
+    <string name="shopping_delete_list_message">All items in this list will also be deleted.</string>
+
+    <string name="shopping_add_item">Add item</string>
+    <string name="shopping_edit_item">Edit item</string>
+    <string name="shopping_items_empty_title">This list is empty</string>
+    <string name="shopping_items_empty_message">Tap + to add the things you need to buy.</string>
+    <string name="shopping_section_to_buy">To buy</string>
+    <string name="shopping_section_bought">Bought</string>
+    <string name="shopping_mark_bought">Mark %1$s as bought</string>
+    <string name="shopping_delete_item">Delete %1$s</string>
+</resources>
