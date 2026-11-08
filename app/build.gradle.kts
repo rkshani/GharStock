@@ -28,8 +28,12 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
     }
     buildFeatures {
         compose = true
@@ -74,8 +78,13 @@ dependencies {
 
     implementation(libs.androidx.datastore.preferences)
 
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.androidx.room.testing)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.ext.junit)
 }
