@@ -9,6 +9,7 @@ import com.rk.gharstock.core.domain.ValidationException
 import com.rk.gharstock.core.model.MeasureUnit
 import java.text.DecimalFormat
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -34,6 +35,7 @@ val ValidationError.messageRes: Int
         ValidationError.INVALID_PRICE -> R.string.error_invalid_price
         ValidationError.INVALID_DOSE -> R.string.error_invalid_dose
         ValidationError.INVALID_SCHEDULE -> R.string.error_invalid_schedule
+        ValidationError.MISSING_MEMBER -> R.string.error_missing_member
     }
 
 /** 2.0 -> "2", 1.5 -> "1.5", 1250.75 -> "1,250.75" */
@@ -58,3 +60,8 @@ private val dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM
 
 /** e.g. "8 Nov 2026", following the device locale. */
 fun formatDate(date: LocalDate): String = dateFormatter.format(date)
+
+private val timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+
+/** e.g. "8:00 AM", following the device locale. */
+fun formatTime(time: LocalTime): String = timeFormatter.format(time)

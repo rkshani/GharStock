@@ -29,6 +29,7 @@ class SaveMedicineUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(medicine: Medicine): Result<Long> = runCatching {
         val name = medicine.name.trim()
+        validate(medicine.memberId > 0, ValidationError.MISSING_MEMBER)
         validate(name.isNotEmpty(), ValidationError.BLANK_NAME)
         validate(medicine.doseAmount > 0, ValidationError.INVALID_DOSE)
         validate(medicine.pillsLeft >= 0, ValidationError.INVALID_QUANTITY)
@@ -61,6 +62,12 @@ class LogDoseUseCase @Inject constructor(
         }
         recorded
     }
+}
+
+class DeleteMedicineUseCase @Inject constructor(
+    private val repository: MedicineRepository,
+) {
+    suspend operator fun invoke(medicineId: Long) = repository.deleteMedicine(medicineId)
 }
 
 /** Deletes a family member together with their medicines and dose history. */
