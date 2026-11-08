@@ -13,7 +13,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.MoveToInbox
 import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -22,11 +24,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -40,6 +46,7 @@ import com.rk.gharstock.core.ui.component.ConfirmDeleteDialog
 import com.rk.gharstock.core.ui.component.EmptyState
 import com.rk.gharstock.core.ui.component.LoadingState
 import com.rk.gharstock.core.ui.component.SectionHeader
+import com.rk.gharstock.core.ui.component.UserMessageEffect
 import com.rk.gharstock.core.ui.component.semanticsLabel
 import com.rk.gharstock.core.ui.text.priceText
 import com.rk.gharstock.core.ui.text.quantityText
@@ -62,6 +69,9 @@ private fun ShoppingListDetailContent(
     onEvent: (ShoppingListDetailEvent) -> Unit,
     onBack: () -> Unit,
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    UserMessageEffect(state.message, snackbarHostState) { onEvent(ShoppingListDetailEvent.MessageShown) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -71,8 +81,19 @@ private fun ShoppingListDetailContent(
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
                     }
                 },
+                actions = {
+                    if (state.bought.isNotEmpty()) {
+                        IconButton(onClick = { onEvent(ShoppingListDetailEvent.MoveToStockClicked) }) {
+                            Icon(
+                                Icons.Outlined.MoveToInbox,
+                                contentDescription = stringResource(R.string.shopping_move_to_stock),
+                            )
+                        }
+                    }
+                },
             )
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(onClick = { onEvent(ShoppingListDetailEvent.AddItemClicked) }) {
                 Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.shopping_add_item))
@@ -102,6 +123,23 @@ private fun ShoppingListDetailContent(
             onChange = { onEvent(ShoppingListDetailEvent.FormChanged(it)) },
             onSave = { onEvent(ShoppingListDetailEvent.SaveItem) },
             onDismiss = { onEvent(ShoppingListDetailEvent.DismissForm) },
+        )
+    }
+    if (state.showMoveConfirm) {
+        AlertDialog(
+            onDismissRequest = { onEvent(ShoppingListDetailEvent.MoveToStockDismissed) },
+            title = { Text(stringResource(R.string.shopping_move_to_stock)) },
+            text = { Text(stringResource(R.string.shopping_move_to_stock_message)) },
+            confirmButton = {
+                TextButton(onClick = { onEvent(ShoppingListDetailEvent.MoveToStockConfirmed) }) {
+                    Text(stringResource(R.string.action_move))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { onEvent(ShoppingListDetailEvent.MoveToStockDismissed) }) {
+                    Text(stringResource(R.string.action_cancel))
+                }
+            },
         )
     }
     state.deleteTarget?.let { target ->
