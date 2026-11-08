@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Alarm
+import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Kitchen
@@ -33,7 +34,7 @@ import com.rk.gharstock.core.ui.component.rememberExactAlarmsAllowed
 import com.rk.gharstock.core.ui.component.rememberNotificationsEnabled
 
 /** Destinations reachable from the More tab. */
-enum class MoreDestination { CATEGORIES, PLACES, MEMBERS, ABOUT }
+enum class MoreDestination { REPORT, CATEGORIES, PLACES, MEMBERS, ABOUT }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,6 +47,10 @@ fun MoreScreen(onOpen: (MoreDestination) -> Unit) {
                 .padding(padding)
                 .verticalScroll(rememberScrollState()),
         ) {
+            SectionHeader(stringResource(R.string.more_section_insights))
+            MoreRow(Icons.Outlined.BarChart, R.string.report_title, R.string.report_summary) {
+                onOpen(MoreDestination.REPORT)
+            }
             SectionHeader(stringResource(R.string.more_section_manage))
             MoreRow(Icons.Outlined.Category, R.string.manage_categories, R.string.manage_categories_summary) {
                 onOpen(MoreDestination.CATEGORIES)

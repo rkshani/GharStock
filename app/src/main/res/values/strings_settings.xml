@@ -3,6 +3,16 @@
     <string name="more_title">More</string>
     <string name="more_section_manage">Manage</string>
     <string name="more_section_app">App</string>
+    <string name="more_section_insights">Insights</string>
+
+    <string name="report_title">Monthly report</string>
+    <string name="report_summary">Grocery spending by month and category</string>
+    <string name="report_total">Total spent</string>
+    <string name="report_by_category">By category</string>
+    <string name="report_previous_month">Previous month</string>
+    <string name="report_next_month">Next month</string>
+    <string name="report_empty_title">No spending this month</string>
+    <string name="report_empty_message">Add a price and purchase date to stock items to see your monthly grocery spending.</string>
 
     <string name="manage_categories">Categories</string>
     <string name="manage_categories_summary">Grains, Dairy, Vegetables…</string>

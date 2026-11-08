@@ -6,6 +6,8 @@ import com.rk.gharstock.feature.medicine.data.FamilyMemberRepositoryImpl
 import com.rk.gharstock.feature.medicine.data.MedicineRepositoryImpl
 import com.rk.gharstock.feature.medicine.domain.FamilyMemberRepository
 import com.rk.gharstock.feature.medicine.domain.MedicineRepository
+import com.rk.gharstock.feature.report.data.ReportRepositoryImpl
+import com.rk.gharstock.feature.report.domain.ReportRepository
 import com.rk.gharstock.feature.settings.data.CatalogRepositoryImpl
 import com.rk.gharstock.feature.settings.domain.CatalogRepository
 import com.rk.gharstock.feature.shopping.data.ShoppingRepositoryImpl
@@ -35,6 +37,9 @@ interface RepositoryModule {
 
     @Binds
     fun bindFamilyMemberRepository(impl: FamilyMemberRepositoryImpl): FamilyMemberRepository
+
+    @Binds
+    fun bindReportRepository(impl: ReportRepositoryImpl): ReportRepository
 
     @Binds
     fun bindMedicineRepository(impl: MedicineRepositoryImpl): MedicineRepository
