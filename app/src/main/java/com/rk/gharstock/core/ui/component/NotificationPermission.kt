@@ -1,6 +1,7 @@
 package com.rk.gharstock.core.ui.component
 
 import android.Manifest
+import android.content.Context
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.rk.gharstock.core.notification.areNotificationsEnabled
+import com.rk.gharstock.core.notification.canScheduleExactAlarms
 
 /** Asks for the Android 13+ notification permission once, when [shouldAsk] becomes true. */
 @Composable
@@ -29,12 +31,19 @@ fun NotificationPermissionRequest(shouldAsk: Boolean, onAsked: () -> Unit) {
 
 /** Whether notifications are enabled, refreshed each time the screen resumes. */
 @Composable
-fun rememberNotificationsEnabled(): Boolean {
+fun rememberNotificationsEnabled(): Boolean = rememberOnResume { it.areNotificationsEnabled() }
+
+/** Whether exact alarms are allowed, refreshed each time the screen resumes. */
+@Composable
+fun rememberExactAlarmsAllowed(): Boolean = rememberOnResume { it.canScheduleExactAlarms() }
+
+@Composable
+private fun rememberOnResume(read: (Context) -> Boolean): Boolean {
     val context = LocalContext.current
-    var enabled by remember { mutableStateOf(context.areNotificationsEnabled()) }
+    var value by remember { mutableStateOf(read(context)) }
     LifecycleResumeEffect(Unit) {
-        enabled = context.areNotificationsEnabled()
+        value = read(context)
         onPauseOrDispose { }
     }
-    return enabled
+    return value
 }

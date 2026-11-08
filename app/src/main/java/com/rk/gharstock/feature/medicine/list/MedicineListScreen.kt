@@ -3,6 +3,7 @@ package com.rk.gharstock.feature.medicine.list
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +12,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Medication
 import androidx.compose.material.icons.outlined.People
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -18,10 +21,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -29,10 +35,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rk.gharstock.R
+import com.rk.gharstock.core.notification.openExactAlarmSettings
 import com.rk.gharstock.core.ui.component.EmptyState
 import com.rk.gharstock.core.ui.component.ExpiryText
 import com.rk.gharstock.core.ui.component.LoadingState
 import com.rk.gharstock.core.ui.component.SectionHeader
+import com.rk.gharstock.core.ui.component.rememberExactAlarmsAllowed
 import com.rk.gharstock.core.ui.text.formatNumber
 import com.rk.gharstock.core.ui.theme.ExpiredRed
 import com.rk.gharstock.feature.medicine.domain.model.Medicine
@@ -89,6 +97,7 @@ private fun MedicineListContent(
                 modifier = modifier,
             )
             else -> LazyColumn(modifier, contentPadding = PaddingValues(bottom = 88.dp)) {
+                item(key = "exact_alarm_banner") { ExactAlarmBanner() }
                 state.groups.forEach { group ->
                     item(key = "member_${group.member.id}") {
                         SectionHeader(listOfNotNull(group.member.name, group.member.relation).joinToString(" · "))
@@ -109,6 +118,28 @@ private fun MedicineListContent(
                     }
                 }
             }
+        }
+    }
+}
+
+/** Shown on Android 12+ when exact alarms are not allowed, so reminders could be late. */
+@Composable
+private fun ExactAlarmBanner() {
+    if (rememberExactAlarmsAllowed()) return
+    val context = LocalContext.current
+    Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+    ) {
+        Row(Modifier.padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                stringResource(R.string.exact_alarms_banner),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.weight(1f),
+            )
+            TextButton(onClick = context::openExactAlarmSettings) { Text(stringResource(R.string.action_allow)) }
         }
     }
 }

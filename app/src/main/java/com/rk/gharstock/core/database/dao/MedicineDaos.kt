@@ -89,6 +89,9 @@ interface DoseLogDao {
     @Query("SELECT * FROM dose_logs WHERE medicine_id = :medicineId ORDER BY scheduled_at DESC")
     fun observeForMedicine(medicineId: Long): Flow<List<DoseLogEntity>>
 
+    @Query("SELECT EXISTS(SELECT 1 FROM dose_logs WHERE medicine_id = :medicineId AND scheduled_at = :scheduledAt)")
+    suspend fun isLogged(medicineId: Long, scheduledAt: Long): Boolean
+
     /** Returns -1 when this dose was already logged. */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(log: DoseLogEntity): Long
