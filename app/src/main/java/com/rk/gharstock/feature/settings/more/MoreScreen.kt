@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Kitchen
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.People
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -19,10 +20,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import com.rk.gharstock.R
+import com.rk.gharstock.core.notification.openNotificationSettings
 import com.rk.gharstock.core.ui.component.SectionHeader
+import com.rk.gharstock.core.ui.component.rememberNotificationsEnabled
 
 /** Destinations reachable from the More tab. */
 enum class MoreDestination { CATEGORIES, PLACES, MEMBERS, ABOUT }
@@ -49,6 +53,13 @@ fun MoreScreen(onOpen: (MoreDestination) -> Unit) {
                 onOpen(MoreDestination.MEMBERS)
             }
             SectionHeader(stringResource(R.string.more_section_app))
+            val context = LocalContext.current
+            MoreRow(
+                icon = Icons.Outlined.Notifications,
+                title = R.string.notifications_title,
+                summary = if (rememberNotificationsEnabled()) R.string.notifications_on else R.string.notifications_off,
+                onClick = context::openNotificationSettings,
+            )
             MoreRow(Icons.Outlined.Info, R.string.about_title, null) { onOpen(MoreDestination.ABOUT) }
         }
     }

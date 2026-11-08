@@ -9,6 +9,7 @@ import com.rk.gharstock.feature.medicine.domain.model.DoseLog
 import com.rk.gharstock.feature.medicine.domain.model.FamilyMember
 import com.rk.gharstock.feature.medicine.domain.model.Medicine
 import com.rk.gharstock.feature.medicine.domain.model.MemberWithMedicines
+import java.time.LocalDate
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -45,6 +46,9 @@ class MedicineRepositoryImpl @Inject constructor(
     override suspend fun getMedicine(id: Long): Medicine? = medicineDao.getById(id)?.toModel()
 
     override suspend fun getAllMedicines(): List<Medicine> = medicineDao.getAll().mapNotNull { it.toModel() }
+
+    override fun observeExpiringBy(date: LocalDate): Flow<List<Medicine>> =
+        medicineDao.observeExpiringBy(date).map { list -> list.mapNotNull { it.toModel() } }
 
     override suspend fun saveMedicine(medicine: Medicine): Long =
         medicineDao.save(medicine.toEntity(), medicine.schedule.toEntity(medicine.id))

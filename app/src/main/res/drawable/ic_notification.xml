@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Small status bar icon: house with shelves, single color -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M24,4L4,20V44H44V20L24,4ZM39,39H9V22.5L24,10.4L39,22.5V39Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M14,27H34V30.5H14ZM14,33H34V36.5H14Z" />
+</vector>
