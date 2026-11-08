@@ -89,6 +89,10 @@ interface DoseLogDao {
     @Query("SELECT * FROM dose_logs WHERE medicine_id = :medicineId ORDER BY scheduled_at DESC")
     fun observeForMedicine(medicineId: Long): Flow<List<DoseLogEntity>>
 
+    /** Logs whose planned time is in [from, to). */
+    @Query("SELECT * FROM dose_logs WHERE scheduled_at >= :from AND scheduled_at < :to")
+    fun observeBetween(from: Long, to: Long): Flow<List<DoseLogEntity>>
+
     @Query("SELECT EXISTS(SELECT 1 FROM dose_logs WHERE medicine_id = :medicineId AND scheduled_at = :scheduledAt)")
     suspend fun isLogged(medicineId: Long, scheduledAt: Long): Boolean
 

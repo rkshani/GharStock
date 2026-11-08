@@ -61,6 +61,9 @@ class MedicineRepositoryImpl @Inject constructor(
     override fun observeDoseLogs(medicineId: Long): Flow<List<DoseLog>> =
         doseLogDao.observeForMedicine(medicineId).map { logs -> logs.map { it.toModel() } }
 
+    override fun observeDoseLogsBetween(fromMillis: Long, toMillis: Long): Flow<List<DoseLog>> =
+        doseLogDao.observeBetween(fromMillis, toMillis).map { logs -> logs.map { it.toModel() } }
+
     override suspend fun isDoseLogged(medicineId: Long, scheduledAt: Long): Boolean =
         doseLogDao.isLogged(medicineId, scheduledAt)
 

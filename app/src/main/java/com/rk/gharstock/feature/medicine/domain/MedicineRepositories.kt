@@ -29,6 +29,9 @@ interface MedicineRepository {
 
     fun observeDoseLogs(medicineId: Long): Flow<List<DoseLog>>
 
+    /** Dose logs whose planned time is in [fromMillis, toMillis). */
+    fun observeDoseLogsBetween(fromMillis: Long, toMillis: Long): Flow<List<DoseLog>>
+
     suspend fun isDoseLogged(medicineId: Long, scheduledAt: Long): Boolean
 
     /** Returns false when this dose was already logged. */

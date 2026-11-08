@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_items_in_stock">Items in stock</string>
+    <string name="home_shopping_pending">Shopping pending</string>
+    <string name="home_today_medicines">Today\'s medicines</string>
+    <string name="home_no_doses">No medicine doses planned for today.</string>
+    <string name="home_expiring_soon">Expiring soon</string>
+    <string name="home_nothing_expiring">Nothing expires in the next 3 days.</string>
+    <string name="home_dose_subtitle">%1$s · %2$s pill(s)</string>
+    <string name="home_take_dose">Mark %1$s at %2$s as taken</string>
+    <string name="home_skip_dose">Skip %1$s at %2$s</string>
+    <string name="home_medicine_label">Medicine</string>
+</resources>

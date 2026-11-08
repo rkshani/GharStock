@@ -61,7 +61,11 @@ fun GharStockAppContent(appViewModel: AppViewModel = hiltViewModel()) {
                 .padding(innerPadding)
                 .consumeWindowInsets(innerPadding),
         ) {
-            homeScreen()
+            homeScreen(
+                navController = navController,
+                onOpenStock = { navController.navigateToTopLevel(TopLevelDestination.STOCK) },
+                onOpenShopping = { navController.navigateToTopLevel(TopLevelDestination.SHOPPING) },
+            )
             shoppingScreens(navController)
             stockScreens(navController)
             medicineScreens(navController)
