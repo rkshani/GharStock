@@ -25,10 +25,13 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -45,6 +48,7 @@ import com.rk.gharstock.core.domain.expiry.ExpirySource
 import com.rk.gharstock.core.ui.component.ExpiryText
 import com.rk.gharstock.core.ui.component.LoadingState
 import com.rk.gharstock.core.ui.component.SectionHeader
+import com.rk.gharstock.core.ui.component.UserMessageEffect
 import com.rk.gharstock.core.ui.text.formatNumber
 import com.rk.gharstock.core.ui.text.formatTime
 import com.rk.gharstock.feature.medicine.domain.model.DoseStatus
@@ -73,8 +77,11 @@ private fun HomeContent(
     onOpenStockItem: (Long) -> Unit,
     onOpenMedicine: (Long) -> Unit,
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    UserMessageEffect(state.message, snackbarHostState) { onEvent(HomeEvent.MessageShown) }
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { padding ->
         if (state.isLoading) {
             LoadingState(Modifier.padding(padding))

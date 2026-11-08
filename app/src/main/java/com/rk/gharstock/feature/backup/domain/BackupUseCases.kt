@@ -1,8 +1,5 @@
 package com.rk.gharstock.feature.backup.domain
 
-import com.rk.gharstock.feature.medicine.domain.MedicineRepository
-import com.rk.gharstock.feature.medicine.domain.reminder.DoseReminderScheduler
-import com.rk.gharstock.feature.medicine.domain.reminder.MedicineNotifier
 import javax.inject.Inject
 
 class ExportBackupUseCase @Inject constructor(
@@ -27,19 +24,9 @@ class ReadBackupUseCase @Inject constructor(
     }
 }
 
-/** Replaces all data with the backup and rebuilds medicine reminders for the restored medicines. */
+/** Replaces all data with the backup. */
 class RestoreBackupUseCase @Inject constructor(
     private val repository: BackupRepository,
-    private val medicineRepository: MedicineRepository,
-    private val reminders: DoseReminderScheduler,
-    private val notifier: MedicineNotifier,
 ) {
-    suspend operator fun invoke(json: String): Result<Unit> = runCatching {
-        medicineRepository.getAllMedicines().forEach {
-            reminders.cancel(it.id)
-            notifier.cancelDoseNotification(it.id)
-        }
-        repository.restore(json)
-        reminders.rescheduleAll()
-    }
+    suspend operator fun invoke(json: String): Result<Unit> = runCatching { repository.restore(json) }
 }

@@ -4,7 +4,7 @@
 Ghar Stock: Pantry & Medicine
 
 ## Short description (max 80 characters)
-Grocery lists, pantry stock, expiry alerts and family medicine reminders. Offline.
+Grocery lists, pantry stock, expiry tracking and family medicine doses. Offline.
 
 ## Full description
 Ghar Stock helps your family keep track of what is at home, what to buy, and which medicines to take, all in one simple app.
@@ -20,15 +20,15 @@ Ghar Stock helps your family keep track of what is at home, what to buy, and whi
 - Red for expired items, orange for items expiring within 3 days
 - Add a low item to a shopping list straight from the stock screen
 
-**Expiry reminders**
-- A daily reminder at 9 AM lists items and medicines that are expired or expire within 3 days
+**Expiry tracking**
+- Home shows items and medicines that are expired or expire within 3 days
 
 **Family medicines**
 - Add medicines for each family member
 - Flexible schedules: fixed times every day, every few hours, chosen days of the week, or a course for a number of days
-- Reminder notifications with Taken and Skip buttons
+- Mark each dose as Taken or Skip from the Home screen
 - Pill count goes down automatically when you mark a dose as taken
-- Low pill alert when only 3 days of doses are left
+- Low pill warning in the app when only 3 days of doses are left
 - Full dose history for every medicine
 
 **Home dashboard**
@@ -50,7 +50,7 @@ Ghar Stock helps your family keep track of what is at home, what to buy, and whi
 House & Home (alternative: Productivity)
 
 ## Tags / keywords
-grocery list, pantry, kitchen inventory, expiry reminder, medicine reminder, pill reminder, family, offline
+grocery list, pantry, kitchen inventory, expiry tracker, medicine tracker, pill tracker, family, offline
 
 ## Content rating
 Everyone
@@ -60,7 +60,5 @@ Everyone
 - Data shared: None
 - The app does not use the internet. All data is stored on the device. Users can export a backup file to a location they choose.
 
-## Permissions explained
-- **Notifications**: expiry and medicine reminders.
-- **Alarms & reminders (exact alarms)**: medicine reminders ring at the exact dose time.
-- **Run at startup**: restores medicine reminders after the phone restarts.
+## Permissions
+The app asks for no permissions. It sends no notifications; all alerts are shown inside the app.

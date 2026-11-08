@@ -46,10 +46,6 @@ abstract class MedicineDao {
     @Query("SELECT * FROM medicines WHERE id = :id")
     abstract suspend fun getById(id: Long): MedicineWithSchedule?
 
-    @Transaction
-    @Query("SELECT * FROM medicines")
-    abstract suspend fun getAll(): List<MedicineWithSchedule>
-
     /** Medicines with an expiry date on or before [date], soonest first. */
     @Transaction
     @Query("SELECT * FROM medicines WHERE expiry_date IS NOT NULL AND expiry_date <= :date ORDER BY expiry_date")
