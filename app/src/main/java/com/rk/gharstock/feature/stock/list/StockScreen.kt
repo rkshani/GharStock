@@ -228,14 +228,16 @@ private fun FilterMenuChip(
 private fun StockList(state: StockUiState, onEvent: (StockEvent) -> Unit, onEditItem: (Long) -> Unit) {
     LazyColumn(contentPadding = PaddingValues(bottom = 88.dp)) {
         items(state.items, key = { it.id }) { item ->
-            StockItemRow(
-                item = item,
-                today = state.today,
-                onClick = { onEditItem(item.id) },
-                onAddToList = { onEvent(StockEvent.AddToListClicked(item)) },
-                onDelete = { onEvent(StockEvent.DeleteClicked(item)) },
-            )
-            HorizontalDivider()
+            Column(Modifier.animateItem()) {
+                StockItemRow(
+                    item = item,
+                    today = state.today,
+                    onClick = { onEditItem(item.id) },
+                    onAddToList = { onEvent(StockEvent.AddToListClicked(item)) },
+                    onDelete = { onEvent(StockEvent.DeleteClicked(item)) },
+                )
+                HorizontalDivider()
+            }
         }
     }
 }

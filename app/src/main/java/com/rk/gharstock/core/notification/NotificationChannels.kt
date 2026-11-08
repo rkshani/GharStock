@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationManagerCompat
 import com.rk.gharstock.R
 
@@ -26,6 +27,7 @@ object NotificationChannels {
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun channel(context: Context, id: String, name: Int, description: Int, importance: Int) =
         NotificationChannel(id, context.getString(name), importance).apply {
             this.description = context.getString(description)
