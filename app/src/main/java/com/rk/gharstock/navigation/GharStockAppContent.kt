@@ -25,7 +25,7 @@ import com.rk.gharstock.feature.home.homeScreen
 import com.rk.gharstock.feature.medicine.medicineScreen
 import com.rk.gharstock.feature.settings.moreScreen
 import com.rk.gharstock.feature.shopping.shoppingScreens
-import com.rk.gharstock.feature.stock.stockScreen
+import com.rk.gharstock.feature.stock.stockScreens
 
 @Composable
 fun GharStockAppContent() {
@@ -55,7 +55,7 @@ fun GharStockAppContent() {
         ) {
             homeScreen()
             shoppingScreens(navController)
-            stockScreen()
+            stockScreens(navController)
             medicineScreen()
             moreScreen()
         }

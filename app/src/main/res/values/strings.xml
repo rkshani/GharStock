@@ -10,7 +10,6 @@
 
     <!-- Placeholder screens -->
     <string name="placeholder_home">Your dashboard will appear here</string>
-    <string name="placeholder_stock">Your home stock will appear here</string>
     <string name="placeholder_medicine">Family medicines will appear here</string>
     <string name="placeholder_more">Settings and backup will appear here</string>
 

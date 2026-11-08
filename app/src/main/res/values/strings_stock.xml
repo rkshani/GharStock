@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stock_title">Home stock</string>
+    <string name="stock_add_item">Add item</string>
+    <string name="stock_edit_item">Edit item</string>
+    <string name="stock_new_item">New item</string>
+    <string name="stock_search_hint">Search items</string>
+    <string name="stock_filter_category">Category: %1$s</string>
+    <string name="stock_filter_place">Place: %1$s</string>
+    <string name="stock_filter_all">All</string>
+    <string name="stock_sort_name">Sort: Name</string>
+    <string name="stock_sort_expiry">Sort: Expiry</string>
+    <string name="stock_empty_title">Your pantry is empty</string>
+    <string name="stock_empty_message">Add groceries you have at home to track quantity and expiry dates.</string>
+    <string name="stock_no_results_title">No matching items</string>
+    <string name="stock_no_results_message">Try a different search or clear the filters.</string>
+    <string name="stock_clear_filters">Clear filters</string>
+
+    <string name="stock_expired_on">Expired %1$s</string>
+    <string name="stock_expires_on">Expires %1$s</string>
+
+    <string name="stock_add_to_shopping">Add to shopping list</string>
+    <string name="stock_choose_list">Choose a list</string>
+    <string name="stock_no_lists">Create a shopping list first from the Shopping tab.</string>
+    <string name="stock_added_to_list">Added to %1$s</string>
+
+    <string name="field_purchase_date">Purchase date</string>
+    <string name="field_expiry_date">Expiry date (optional)</string>
+    <string name="action_pick_date">Pick date</string>
+
+    <string name="shopping_move_to_stock">Move bought items to stock</string>
+    <string name="shopping_move_to_stock_message">Bought items will be added to your home stock with today as the purchase date, and removed from this list.</string>
+    <string name="action_move">Move</string>
+    <plurals name="shopping_moved_to_stock">
+        <item quantity="one">%d item moved to stock</item>
+        <item quantity="other">%d items moved to stock</item>
+    </plurals>
+</resources>

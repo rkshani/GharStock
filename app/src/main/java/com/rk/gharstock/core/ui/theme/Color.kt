@@ -26,3 +26,7 @@ val Neutral10 = Color(0xFF191C1A)
 val NeutralVariant30 = Color(0xFF404943)
 val NeutralVariant50 = Color(0xFF707973)
 val NeutralVariant80 = Color(0xFFBFC9C1)
+
+// Expiry status colors used by stock and medicine lists.
+val ExpiredRed = Color(0xFFC62828)
+val ExpiringOrange = Color(0xFFE65100)
