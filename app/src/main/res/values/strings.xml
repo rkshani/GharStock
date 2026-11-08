@@ -8,11 +8,6 @@
     <string name="nav_medicine">Medicine</string>
     <string name="nav_more">More</string>
 
-    <!-- Placeholder screens -->
-    <string name="placeholder_home">Your dashboard will appear here</string>
-    <string name="placeholder_stock">Your home stock will appear here</string>
-    <string name="placeholder_medicine">Family medicines will appear here</string>
-    <string name="placeholder_more">Settings and backup will appear here</string>
 
     <!-- Seeded on first launch; users can edit or delete them later -->
     <string-array name="default_categories">

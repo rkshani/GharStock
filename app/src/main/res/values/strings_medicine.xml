@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicine_title">Medicines</string>
+    <string name="medicine_add">Add medicine</string>
+    <string name="medicine_new">New medicine</string>
+    <string name="medicine_edit">Edit medicine</string>
+    <string name="medicine_details">Medicine details</string>
+    <string name="medicine_no_members_title">Add a family member first</string>
+    <string name="medicine_no_members_message">Medicines are organised by family member. Add yourself or a family member to begin.</string>
+    <string name="medicine_empty_title">No medicines yet</string>
+    <string name="medicine_empty_message">Add a medicine with its dose schedule to get reminders.</string>
+    <string name="medicine_member_none">No medicines</string>
+
+    <string name="field_member">Family member</string>
+    <string name="field_dose_amount">Dose (pills per dose)</string>
+    <string name="field_pills_left">Pills left</string>
+    <string name="field_notes">Notes (optional)</string>
+    <string name="field_schedule_type">Schedule</string>
+    <string name="field_start_date">Start date</string>
+    <string name="field_start_time">First dose time</string>
+    <string name="field_interval_hours">Every how many hours</string>
+    <string name="field_duration_days">Number of days</string>
+    <string name="field_times">Dose times</string>
+    <string name="field_days">Days</string>
+    <string name="action_add_time">Add time</string>
+    <string name="action_pick_time">Pick time</string>
+    <string name="action_remove_time">Remove %1$s</string>
+    <string name="select_time">Select time</string>
+
+    <string name="schedule_fixed_times">Fixed times every day</string>
+    <string name="schedule_every_x_hours">Every few hours</string>
+    <string name="schedule_days_of_week">Specific days of the week</string>
+    <string name="schedule_course">Course for a number of days</string>
+
+    <string name="schedule_summary_daily">Daily at %1$s</string>
+    <string name="schedule_summary_interval">Every %1$d hours from %2$s</string>
+    <string name="schedule_summary_days">%1$s at %2$s</string>
+    <string name="schedule_summary_course">%1$s for %2$d days from %3$s</string>
+
+    <string name="medicine_dose_format">%1$s pill(s) per dose</string>
+    <string name="medicine_pills_left">%1$s pills left</string>
+    <string name="medicine_low_pills">Low: %1$s pills left</string>
+    <string name="medicine_days_left">About %1$s days left</string>
+    <string name="medicine_history">Dose history</string>
+    <string name="medicine_history_empty">No doses logged yet.</string>
+    <string name="dose_taken">Taken</string>
+    <string name="dose_skipped">Skipped</string>
+    <string name="error_missing_member">Please choose a family member</string>
+</resources>

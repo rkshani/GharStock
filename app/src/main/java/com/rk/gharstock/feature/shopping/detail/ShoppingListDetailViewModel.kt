@@ -5,8 +5,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.rk.gharstock.R
 import com.rk.gharstock.core.model.Category
 import com.rk.gharstock.core.model.MeasureUnit
+import com.rk.gharstock.core.ui.component.UserMessage
 import com.rk.gharstock.core.ui.text.formatEditableNumber
 import com.rk.gharstock.core.ui.text.validationMessageRes
 import com.rk.gharstock.core.util.toDecimalOrNull
@@ -15,6 +17,7 @@ import com.rk.gharstock.feature.settings.domain.CatalogRepository
 import com.rk.gharstock.feature.shopping.ShoppingListDetailRoute
 import com.rk.gharstock.feature.shopping.domain.ShoppingRepository
 import com.rk.gharstock.feature.shopping.domain.model.ShoppingItem
+import com.rk.gharstock.feature.shopping.domain.usecase.MoveBoughtItemsToStockUseCase
 import com.rk.gharstock.feature.shopping.domain.usecase.SaveShoppingItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -50,6 +53,8 @@ data class ShoppingListDetailUiState(
     val categories: List<Category> = emptyList(),
     val form: ShoppingItemForm? = null,
     val deleteTarget: ShoppingItem? = null,
+    val showMoveConfirm: Boolean = false,
+    val message: UserMessage? = null,
 ) {
     val isEmpty: Boolean get() = toBuy.isEmpty() && bought.isEmpty()
 }
@@ -64,11 +69,17 @@ sealed interface ShoppingListDetailEvent {
     data class DeleteClicked(val item: ShoppingItem) : ShoppingListDetailEvent
     data object DeleteConfirmed : ShoppingListDetailEvent
     data object DeleteDismissed : ShoppingListDetailEvent
+    data object MoveToStockClicked : ShoppingListDetailEvent
+    data object MoveToStockConfirmed : ShoppingListDetailEvent
+    data object MoveToStockDismissed : ShoppingListDetailEvent
+    data object MessageShown : ShoppingListDetailEvent
 }
 
 private data class DetailDialogs(
     val form: ShoppingItemForm? = null,
     val deleteTarget: ShoppingItem? = null,
+    val showMoveConfirm: Boolean = false,
+    val message: UserMessage? = null,
 )
 
 @HiltViewModel
@@ -77,6 +88,7 @@ class ShoppingListDetailViewModel @Inject constructor(
     private val repository: ShoppingRepository,
     catalogRepository: CatalogRepository,
     private val saveItem: SaveShoppingItemUseCase,
+    private val moveBoughtItemsToStock: MoveBoughtItemsToStockUseCase,
 ) : ViewModel() {
 
     private val listId = savedStateHandle.toRoute<ShoppingListDetailRoute>().listId
@@ -98,6 +110,8 @@ class ShoppingListDetailViewModel @Inject constructor(
             categories = categories,
             form = dialogs.form,
             deleteTarget = dialogs.deleteTarget,
+            showMoveConfirm = dialogs.showMoveConfirm,
+            message = dialogs.message,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), ShoppingListDetailUiState())
 
@@ -114,6 +128,10 @@ class ShoppingListDetailViewModel @Inject constructor(
             is ShoppingListDetailEvent.DeleteClicked -> dialogs.update { it.copy(deleteTarget = event.item) }
             ShoppingListDetailEvent.DeleteConfirmed -> delete()
             ShoppingListDetailEvent.DeleteDismissed -> dialogs.update { it.copy(deleteTarget = null) }
+            ShoppingListDetailEvent.MoveToStockClicked -> dialogs.update { it.copy(showMoveConfirm = true) }
+            ShoppingListDetailEvent.MoveToStockConfirmed -> moveToStock()
+            ShoppingListDetailEvent.MoveToStockDismissed -> dialogs.update { it.copy(showMoveConfirm = false) }
+            ShoppingListDetailEvent.MessageShown -> dialogs.update { it.copy(message = null) }
         }
     }
 
@@ -130,6 +148,14 @@ class ShoppingListDetailViewModel @Inject constructor(
         val target = dialogs.value.deleteTarget ?: return
         dialogs.update { it.copy(deleteTarget = null) }
         viewModelScope.launch { repository.deleteItem(target.id) }
+    }
+
+    private fun moveToStock() {
+        dialogs.update { it.copy(showMoveConfirm = false) }
+        viewModelScope.launch {
+            val moved = moveBoughtItemsToStock(listId)
+            dialogs.update { it.copy(message = UserMessage.Plural(R.plurals.shopping_moved_to_stock, moved)) }
+        }
     }
 
     private fun ShoppingItemForm.toItem() = ShoppingItem(

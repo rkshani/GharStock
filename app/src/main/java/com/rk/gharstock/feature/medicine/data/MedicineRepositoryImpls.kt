@@ -9,6 +9,7 @@ import com.rk.gharstock.feature.medicine.domain.model.DoseLog
 import com.rk.gharstock.feature.medicine.domain.model.FamilyMember
 import com.rk.gharstock.feature.medicine.domain.model.Medicine
 import com.rk.gharstock.feature.medicine.domain.model.MemberWithMedicines
+import java.time.LocalDate
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -46,6 +47,9 @@ class MedicineRepositoryImpl @Inject constructor(
 
     override suspend fun getAllMedicines(): List<Medicine> = medicineDao.getAll().mapNotNull { it.toModel() }
 
+    override fun observeExpiringBy(date: LocalDate): Flow<List<Medicine>> =
+        medicineDao.observeExpiringBy(date).map { list -> list.mapNotNull { it.toModel() } }
+
     override suspend fun saveMedicine(medicine: Medicine): Long =
         medicineDao.save(medicine.toEntity(), medicine.schedule.toEntity(medicine.id))
 
@@ -56,6 +60,12 @@ class MedicineRepositoryImpl @Inject constructor(
 
     override fun observeDoseLogs(medicineId: Long): Flow<List<DoseLog>> =
         doseLogDao.observeForMedicine(medicineId).map { logs -> logs.map { it.toModel() } }
+
+    override fun observeDoseLogsBetween(fromMillis: Long, toMillis: Long): Flow<List<DoseLog>> =
+        doseLogDao.observeBetween(fromMillis, toMillis).map { logs -> logs.map { it.toModel() } }
+
+    override suspend fun isDoseLogged(medicineId: Long, scheduledAt: Long): Boolean =
+        doseLogDao.isLogged(medicineId, scheduledAt)
 
     override suspend fun logDose(log: DoseLog): Boolean = doseLogDao.insert(log.toEntity()) != -1L
 }

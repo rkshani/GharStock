@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -20,15 +22,21 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.rk.gharstock.core.ui.component.NotificationPermissionRequest
 import com.rk.gharstock.feature.home.HomeRoute
 import com.rk.gharstock.feature.home.homeScreen
-import com.rk.gharstock.feature.medicine.medicineScreen
-import com.rk.gharstock.feature.settings.moreScreen
+import com.rk.gharstock.feature.medicine.medicineScreens
+import com.rk.gharstock.feature.settings.settingsScreens
 import com.rk.gharstock.feature.shopping.shoppingScreens
-import com.rk.gharstock.feature.stock.stockScreen
+import com.rk.gharstock.feature.stock.stockScreens
 
 @Composable
-fun GharStockAppContent() {
+fun GharStockAppContent(appViewModel: AppViewModel = hiltViewModel()) {
+    val appState by appViewModel.uiState.collectAsStateWithLifecycle()
+    NotificationPermissionRequest(appState.askNotificationPermission) {
+        appViewModel.onEvent(AppEvent.NotificationPromptShown)
+    }
+
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
@@ -53,11 +61,15 @@ fun GharStockAppContent() {
                 .padding(innerPadding)
                 .consumeWindowInsets(innerPadding),
         ) {
-            homeScreen()
+            homeScreen(
+                navController = navController,
+                onOpenStock = { navController.navigateToTopLevel(TopLevelDestination.STOCK) },
+                onOpenShopping = { navController.navigateToTopLevel(TopLevelDestination.SHOPPING) },
+            )
             shoppingScreens(navController)
-            stockScreen()
-            medicineScreen()
-            moreScreen()
+            stockScreens(navController)
+            medicineScreens(navController)
+            settingsScreens(navController)
         }
     }
 }

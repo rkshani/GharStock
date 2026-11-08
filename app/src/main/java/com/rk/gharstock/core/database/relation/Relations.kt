@@ -31,6 +31,11 @@ data class StockItemWithDetails(
     val place: StoragePlaceEntity?,
 )
 
+data class CategorySpendingRow(
+    val categoryName: String?,
+    val total: Double,
+)
+
 data class MedicineWithSchedule(
     @Embedded val medicine: MedicineEntity,
     @Relation(parentColumn = "id", entityColumn = "medicine_id")

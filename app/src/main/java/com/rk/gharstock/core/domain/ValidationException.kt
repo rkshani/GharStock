@@ -7,6 +7,7 @@ enum class ValidationError {
     INVALID_PRICE,
     INVALID_DOSE,
     INVALID_SCHEDULE,
+    MISSING_MEMBER,
 }
 
 /** Thrown inside use cases and returned as `Result.failure` so the UI can show a message. */

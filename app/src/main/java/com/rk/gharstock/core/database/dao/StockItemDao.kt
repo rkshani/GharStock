@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.rk.gharstock.core.database.entity.StockItemEntity
+import com.rk.gharstock.core.database.relation.CategorySpendingRow
 import com.rk.gharstock.core.database.relation.StockItemWithDetails
 import java.time.LocalDate
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,19 @@ interface StockItemDao {
     @Transaction
     @Query("SELECT * FROM stock_items WHERE expiry_date IS NOT NULL AND expiry_date <= :date ORDER BY expiry_date")
     fun observeExpiringBy(date: LocalDate): Flow<List<StockItemWithDetails>>
+
+    /** Sum of prices of items purchased in [from, until), grouped by category. */
+    @Query(
+        """
+        SELECT c.name AS categoryName, SUM(s.price) AS total
+        FROM stock_items s
+        LEFT JOIN categories c ON c.id = s.category_id
+        WHERE s.price IS NOT NULL AND s.purchase_date >= :from AND s.purchase_date < :until
+        GROUP BY s.category_id
+        ORDER BY total DESC
+        """,
+    )
+    fun observeSpendingByCategory(from: LocalDate, until: LocalDate): Flow<List<CategorySpendingRow>>
 
     @Query("SELECT COUNT(*) FROM stock_items")
     fun observeCount(): Flow<Int>

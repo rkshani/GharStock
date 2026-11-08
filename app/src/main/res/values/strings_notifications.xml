@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="channel_expiry_name">Expiry reminders</string>
+    <string name="channel_expiry_description">Daily reminder about expired and soon-to-expire items and medicines</string>
+    <string name="channel_doses_name">Medicine doses</string>
+    <string name="channel_doses_description">Reminders to take medicines on time</string>
+    <string name="channel_low_pills_name">Low medicine stock</string>
+    <string name="channel_low_pills_description">Alert when a medicine has only a few days of pills left</string>
+
+    <plurals name="expiry_notification_title">
+        <item quantity="one">%d item needs attention</item>
+        <item quantity="other">%d items need attention</item>
+    </plurals>
+    <string name="expiry_line_expired">%1$s · expired %2$s</string>
+    <string name="expiry_line_today">%1$s · expires today</string>
+    <string name="expiry_line_soon">%1$s · expires %2$s</string>
+
+    <string name="dose_notification_title">Time for %1$s</string>
+    <string name="dose_action_taken">Taken</string>
+    <string name="dose_action_skip">Skip</string>
+    <string name="low_pills_notification_title">%1$s is running low</string>
+
+    <string name="exact_alarms_title">Exact medicine reminders</string>
+    <string name="exact_alarms_off">Off. Reminders may be a few minutes late. Tap to allow.</string>
+    <string name="exact_alarms_banner">Allow \"Alarms &amp; reminders\" so medicine reminders ring exactly on time.</string>
+    <string name="action_allow">Allow</string>
+
+    <string name="notifications_title">Notifications</string>
+    <string name="notifications_on">On</string>
+    <string name="notifications_off">Off. Tap to turn on reminders.</string>
+</resources>

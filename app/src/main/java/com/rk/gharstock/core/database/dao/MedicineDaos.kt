@@ -12,6 +12,7 @@ import com.rk.gharstock.core.database.entity.FamilyMemberEntity
 import com.rk.gharstock.core.database.entity.MedicineEntity
 import com.rk.gharstock.core.database.relation.MedicineWithSchedule
 import com.rk.gharstock.core.database.relation.MemberWithMedicinesRelation
+import java.time.LocalDate
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -49,6 +50,11 @@ abstract class MedicineDao {
     @Query("SELECT * FROM medicines")
     abstract suspend fun getAll(): List<MedicineWithSchedule>
 
+    /** Medicines with an expiry date on or before [date], soonest first. */
+    @Transaction
+    @Query("SELECT * FROM medicines WHERE expiry_date IS NOT NULL AND expiry_date <= :date ORDER BY expiry_date")
+    abstract fun observeExpiringBy(date: LocalDate): Flow<List<MedicineWithSchedule>>
+
     /** Inserts or updates the medicine and replaces its schedule. Returns the medicine id. */
     @Transaction
     open suspend fun save(medicine: MedicineEntity, schedule: DoseScheduleEntity): Long {
@@ -82,6 +88,13 @@ interface DoseLogDao {
 
     @Query("SELECT * FROM dose_logs WHERE medicine_id = :medicineId ORDER BY scheduled_at DESC")
     fun observeForMedicine(medicineId: Long): Flow<List<DoseLogEntity>>
+
+    /** Logs whose planned time is in [from, to). */
+    @Query("SELECT * FROM dose_logs WHERE scheduled_at >= :from AND scheduled_at < :to")
+    fun observeBetween(from: Long, to: Long): Flow<List<DoseLogEntity>>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM dose_logs WHERE medicine_id = :medicineId AND scheduled_at = :scheduledAt)")
+    suspend fun isLogged(medicineId: Long, scheduledAt: Long): Boolean
 
     /** Returns -1 when this dose was already logged. */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
