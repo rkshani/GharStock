@@ -23,7 +23,7 @@ import androidx.navigation.compose.rememberNavController
 import com.rk.gharstock.feature.home.HomeRoute
 import com.rk.gharstock.feature.home.homeScreen
 import com.rk.gharstock.feature.medicine.medicineScreen
-import com.rk.gharstock.feature.settings.moreScreen
+import com.rk.gharstock.feature.settings.settingsScreens
 import com.rk.gharstock.feature.shopping.shoppingScreens
 import com.rk.gharstock.feature.stock.stockScreens
 
@@ -57,7 +57,7 @@ fun GharStockAppContent() {
             shoppingScreens(navController)
             stockScreens(navController)
             medicineScreen()
-            moreScreen()
+            settingsScreens(navController)
         }
     }
 }

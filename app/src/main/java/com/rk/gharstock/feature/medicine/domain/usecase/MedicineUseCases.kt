@@ -62,3 +62,10 @@ class LogDoseUseCase @Inject constructor(
         recorded
     }
 }
+
+/** Deletes a family member together with their medicines and dose history. */
+class DeleteFamilyMemberUseCase @Inject constructor(
+    private val repository: FamilyMemberRepository,
+) {
+    suspend operator fun invoke(memberId: Long) = repository.deleteMember(memberId)
+}

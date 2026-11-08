@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="more_title">More</string>
+    <string name="more_section_manage">Manage</string>
+    <string name="more_section_app">App</string>
+
+    <string name="manage_categories">Categories</string>
+    <string name="manage_categories_summary">Grains, Dairy, Vegetables…</string>
+    <string name="manage_places">Storage places</string>
+    <string name="manage_places_summary">Fridge, Freezer, Kitchen…</string>
+    <string name="manage_members">Family members</string>
+    <string name="manage_members_summary">People who take medicines</string>
+
+    <string name="category_add">Add category</string>
+    <string name="category_rename">Rename category</string>
+    <string name="category_empty_title">No categories</string>
+    <string name="category_empty_message">Add categories to group your groceries.</string>
+    <string name="category_delete_message">Items in this category will be kept and shown as Uncategorized.</string>
+
+    <string name="place_add">Add storage place</string>
+    <string name="place_rename">Rename storage place</string>
+    <string name="place_empty_title">No storage places</string>
+    <string name="place_empty_message">Add places like Fridge or Store Room to know where things are kept.</string>
+    <string name="place_delete_message">Items kept here will be kept without a storage place.</string>
+
+    <string name="member_add">Add family member</string>
+    <string name="member_edit">Edit family member</string>
+    <string name="member_relation_label">Relation (optional)</string>
+    <string name="member_empty_title">No family members</string>
+    <string name="member_empty_message">Add family members to set up their medicines.</string>
+    <string name="member_delete_message">All medicines, schedules and dose history of this member will also be deleted.</string>
+
+    <string name="about_title">About</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_description">Ghar Stock helps you manage groceries, pantry stock, expiry dates and family medicines. Everything stays on your phone: no internet, no ads, no tracking.</string>
+</resources>
