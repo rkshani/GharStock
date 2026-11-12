@@ -1,19 +1,16 @@
 package com.rk.gharstock.feature.settings.more
 
-import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Alarm
 import androidx.compose.material.icons.outlined.Backup
 import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Kitchen
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.People
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,15 +21,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import com.rk.gharstock.R
-import com.rk.gharstock.core.notification.openExactAlarmSettings
-import com.rk.gharstock.core.notification.openNotificationSettings
 import com.rk.gharstock.core.ui.component.SectionHeader
-import com.rk.gharstock.core.ui.component.rememberExactAlarmsAllowed
-import com.rk.gharstock.core.ui.component.rememberNotificationsEnabled
 
 /** Destinations reachable from the More tab. */
 enum class MoreDestination { REPORT, CATEGORIES, PLACES, MEMBERS, BACKUP, ABOUT }
@@ -65,21 +57,6 @@ fun MoreScreen(onOpen: (MoreDestination) -> Unit) {
             SectionHeader(stringResource(R.string.more_section_app))
             MoreRow(Icons.Outlined.Backup, R.string.backup_title, R.string.backup_summary) {
                 onOpen(MoreDestination.BACKUP)
-            }
-            val context = LocalContext.current
-            MoreRow(
-                icon = Icons.Outlined.Notifications,
-                title = R.string.notifications_title,
-                summary = if (rememberNotificationsEnabled()) R.string.notifications_on else R.string.notifications_off,
-                onClick = context::openNotificationSettings,
-            )
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                MoreRow(
-                    icon = Icons.Outlined.Alarm,
-                    title = R.string.exact_alarms_title,
-                    summary = if (rememberExactAlarmsAllowed()) R.string.notifications_on else R.string.exact_alarms_off,
-                    onClick = context::openExactAlarmSettings,
-                )
             }
             MoreRow(Icons.Outlined.Info, R.string.about_title, null) { onOpen(MoreDestination.ABOUT) }
         }

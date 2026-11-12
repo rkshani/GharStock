@@ -19,7 +19,6 @@ interface MedicineRepository {
     fun observeMedicinesByMember(): Flow<List<MemberWithMedicines>>
     fun observeMedicine(id: Long): Flow<Medicine?>
     suspend fun getMedicine(id: Long): Medicine?
-    suspend fun getAllMedicines(): List<Medicine>
 
     /** Medicines expiring on or before [date], including already expired ones. */
     fun observeExpiringBy(date: LocalDate): Flow<List<Medicine>>

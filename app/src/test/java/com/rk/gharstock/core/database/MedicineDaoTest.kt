@@ -36,7 +36,7 @@ class MedicineDaoTest : DatabaseTest() {
 
         dao.save(medicineEntity(memberId).copy(id = id, name = "Brufen"), fixedTimesSchedule(LocalTime.of(9, 0)))
 
-        val all = dao.getAll()
+        val all = dao.observeMembersWithMedicines().first().single().medicines
         assertEquals(1, all.size)
         assertEquals("Brufen", all.single().medicine.name)
         assertEquals(listOf(LocalTime.of(9, 0)), all.single().schedule?.times)

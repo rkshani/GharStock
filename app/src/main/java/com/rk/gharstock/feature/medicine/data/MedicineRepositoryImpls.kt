@@ -45,8 +45,6 @@ class MedicineRepositoryImpl @Inject constructor(
 
     override suspend fun getMedicine(id: Long): Medicine? = medicineDao.getById(id)?.toModel()
 
-    override suspend fun getAllMedicines(): List<Medicine> = medicineDao.getAll().mapNotNull { it.toModel() }
-
     override fun observeExpiringBy(date: LocalDate): Flow<List<Medicine>> =
         medicineDao.observeExpiringBy(date).map { list -> list.mapNotNull { it.toModel() } }
 

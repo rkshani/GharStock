@@ -10,8 +10,6 @@ import com.rk.gharstock.feature.medicine.domain.model.DoseStatus
 import com.rk.gharstock.feature.medicine.domain.model.FamilyMember
 import com.rk.gharstock.feature.medicine.domain.model.Medicine
 import com.rk.gharstock.feature.medicine.domain.model.ScheduleType
-import com.rk.gharstock.feature.medicine.domain.reminder.DoseReminderScheduler
-import com.rk.gharstock.feature.medicine.domain.reminder.MedicineNotifier
 import java.time.LocalTime
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -26,12 +24,9 @@ class MedicineUseCasesTest : DatabaseTest() {
     private val memberRepo by lazy { FamilyMemberRepositoryImpl(db.familyMemberDao()) }
     private val medicineRepo by lazy { MedicineRepositoryImpl(db.medicineDao(), db.doseLogDao()) }
 
-    private val reminders = FakeReminders()
-    private val notifier = FakeNotifier()
-
     private val saveMember by lazy { SaveFamilyMemberUseCase(memberRepo) }
-    private val saveMedicine by lazy { SaveMedicineUseCase(medicineRepo, reminders) }
-    private val logDose by lazy { LogDoseUseCase(medicineRepo, transaction, notifier, clock) }
+    private val saveMedicine by lazy { SaveMedicineUseCase(medicineRepo) }
+    private val logDose by lazy { LogDoseUseCase(medicineRepo, transaction, clock) }
 
     private fun errorOf(result: Result<*>) = (result.exceptionOrNull() as ValidationException).error
 
@@ -65,33 +60,27 @@ class MedicineUseCasesTest : DatabaseTest() {
             ValidationError.INVALID_SCHEDULE,
             errorOf(saveMedicine(medicine.copy(schedule = medicine.schedule.copy(times = emptyList())))),
         )
-        assertTrue(reminders.scheduled.isEmpty())
-        val id = saveMedicine(medicine).getOrThrow()
-        assertEquals(listOf(id), reminders.scheduled)
+        assertTrue(saveMedicine(medicine).isSuccess)
     }
 
     @Test
-    fun `deleting a member cancels reminders of their medicines`() = runTest {
+    fun `deleting a member deletes their medicines`() = runTest {
         val id = saveMedicine(newMedicine()).getOrThrow()
         val memberId = medicineRepo.getMedicine(id)!!.memberId
 
-        DeleteFamilyMemberUseCase(memberRepo, medicineRepo, reminders, notifier)(memberId)
+        DeleteFamilyMemberUseCase(memberRepo)(memberId)
 
-        assertEquals(listOf(id), reminders.cancelled)
         assertNull(medicineRepo.getMedicine(id))
     }
 
     @Test
-    fun `low pills alert fires once when pills drop to three days`() = runTest {
+    fun `low pills is reported once when pills drop to three days`() = runTest {
         // 2 pills per dose, once a day: low at 6 pills or fewer.
         val id = saveMedicine(newMedicine(pillsLeft = 10.0)).getOrThrow()
 
         assertFalse(logDose(id, 1_000, DoseStatus.TAKEN).becameLowOnPills) // 8 left
         assertTrue(logDose(id, 2_000, DoseStatus.TAKEN).becameLowOnPills) // 6 left
         assertFalse(logDose(id, 3_000, DoseStatus.TAKEN).becameLowOnPills) // 4 left, already low
-
-        assertEquals(listOf(id), notifier.lowPills)
-        assertEquals(3, notifier.cancelledDoses.size)
     }
 
     @Test
@@ -121,28 +110,5 @@ class MedicineUseCasesTest : DatabaseTest() {
     @Test
     fun `logging for a missing medicine returns false`() = runTest {
         assertFalse(logDose(medicineId = 99, scheduledAt = 1_000, status = DoseStatus.TAKEN).recorded)
-    }
-
-    private class FakeReminders : DoseReminderScheduler {
-        val scheduled = mutableListOf<Long>()
-        val cancelled = mutableListOf<Long>()
-        override fun schedule(medicine: Medicine) {
-            scheduled += medicine.id
-        }
-        override fun cancel(medicineId: Long) {
-            cancelled += medicineId
-        }
-        override suspend fun rescheduleAll() = Unit
-    }
-
-    private class FakeNotifier : MedicineNotifier {
-        val lowPills = mutableListOf<Long>()
-        val cancelledDoses = mutableListOf<Long>()
-        override fun cancelDoseNotification(medicineId: Long) {
-            cancelledDoses += medicineId
-        }
-        override fun showLowPills(medicine: Medicine) {
-            lowPills += medicine.id
-        }
     }
 }

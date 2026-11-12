@@ -1,8 +1,9 @@
 # Ghar Stock
 
-Offline Android app for home grocery lists, pantry stock, expiry reminders and family medicine reminders.
+Offline Android app for home grocery lists, pantry stock, expiry tracking and family medicines.
 
 - 100% offline: no internet permission, no ads, no analytics
+- No system notifications and no runtime permissions: all alerts are shown inside the app
 - Kotlin, Jetpack Compose, Material 3 (light theme only), English only
 - Min SDK 24, target SDK 37
 
@@ -12,8 +13,8 @@ Offline Android app for home grocery lists, pantry stock, expiry reminders and f
 |---|---|
 | Shopping | Multiple lists, items with quantity/unit/category/price, tick as bought, move bought items to stock |
 | Stock | Pantry items with category, storage place, price, purchase and expiry dates; search, filters, sort by expiry, expiry colours, add to shopping list |
-| Expiry reminders | Daily 9 AM WorkManager job, one grouped notification for expired and soon-to-expire stock and medicines |
-| Medicines | Family members, four schedule types, exact alarm reminders with Taken/Skip, pill count, low pill alert, dose history |
+| Expiry | Expired and soon-to-expire (3 days) stock and medicines shown on Home and in red/orange in lists |
+| Medicines | Family members, four schedule types, Taken/Skip from Home, pill count, in-app low pill alert, dose history |
 | Home | Counts, today's doses with Taken/Skip, expiring soon |
 | Report | Monthly grocery spending by category (Compose bar chart) |
 | Backup | JSON export/import with the Storage Access Framework, confirmation before replacing data |
@@ -29,8 +30,6 @@ app/src/main/java/com/rk/gharstock/
 │   ├── di/            Hilt modules
 │   ├── domain/        Shared domain: validation, transactions, expiry alerts
 │   ├── model/         Shared models (units, categories, expiry status)
-│   ├── notification/  Channels, expiry worker, dose alarms and receivers
-│   ├── preferences/   DataStore
 │   ├── ui/            Theme and shared Compose components
 │   └── util/
 ├── feature/

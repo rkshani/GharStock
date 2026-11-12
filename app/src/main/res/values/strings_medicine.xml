@@ -8,7 +8,7 @@
     <string name="medicine_no_members_title">Add a family member first</string>
     <string name="medicine_no_members_message">Medicines are organised by family member. Add yourself or a family member to begin.</string>
     <string name="medicine_empty_title">No medicines yet</string>
-    <string name="medicine_empty_message">Add a medicine with its dose schedule to get reminders.</string>
+    <string name="medicine_empty_message">Add a medicine with its dose schedule to see its doses on Home.</string>
     <string name="medicine_member_none">No medicines</string>
 
     <string name="field_member">Family member</string>
@@ -45,5 +45,7 @@
     <string name="medicine_history_empty">No doses logged yet.</string>
     <string name="dose_taken">Taken</string>
     <string name="dose_skipped">Skipped</string>
+    <string name="dose_action_taken">Taken</string>
+    <string name="dose_action_skip">Skip</string>
     <string name="error_missing_member">Please choose a family member</string>
 </resources>

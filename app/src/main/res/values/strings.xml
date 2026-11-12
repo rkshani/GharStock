@@ -27,4 +27,10 @@
         <item>Kitchen</item>
         <item>Store Room</item>
     </string-array>
+    <string name="drawer_open">Open menu</string>
+    <string name="drawer_home">Home</string>
+    <string name="drawer_rate_us">Rate Us</string>
+    <string name="drawer_privacy_policy">Privacy Policy</string>
+    <string name="drawer_exit">Exit</string>
+    <string name="drawer_no_app_to_open">No app found to open this link</string>
 </resources>

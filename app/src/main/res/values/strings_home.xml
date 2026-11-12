@@ -10,4 +10,5 @@
     <string name="home_take_dose">Mark %1$s at %2$s as taken</string>
     <string name="home_skip_dose">Skip %1$s at %2$s</string>
     <string name="home_medicine_label">Medicine</string>
+    <string name="home_low_pills">%1$s is running low. Time to buy more.</string>
 </resources>

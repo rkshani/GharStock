@@ -14,11 +14,13 @@ fun NavGraphBuilder.homeScreen(
     navController: NavController,
     onOpenStock: () -> Unit,
     onOpenShopping: () -> Unit,
+    onOpenDrawer: () -> Unit,
 ) {
     composable<HomeRoute> {
         HomeScreen(
             onOpenStock = onOpenStock,
             onOpenShopping = onOpenShopping,
+            onOpenDrawer = onOpenDrawer,
             onOpenStockItem = { navController.navigate(StockEditRoute(it)) },
             onOpenMedicine = { navController.navigate(MedicineDetailRoute(it)) },
         )
