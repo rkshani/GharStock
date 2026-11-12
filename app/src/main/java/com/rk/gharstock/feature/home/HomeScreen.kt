@@ -15,12 +15,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Inventory2
 import androidx.compose.material.icons.outlined.Medication
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.RemoveCircleOutline
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -61,10 +63,11 @@ fun HomeScreen(
     onOpenShopping: () -> Unit,
     onOpenStockItem: (Long) -> Unit,
     onOpenMedicine: (Long) -> Unit,
+    onOpenDrawer: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    HomeContent(state, viewModel::onEvent, onOpenStock, onOpenShopping, onOpenStockItem, onOpenMedicine)
+    HomeContent(state, viewModel::onEvent, onOpenStock, onOpenShopping, onOpenStockItem, onOpenMedicine, onOpenDrawer)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,11 +79,21 @@ private fun HomeContent(
     onOpenShopping: () -> Unit,
     onOpenStockItem: (Long) -> Unit,
     onOpenMedicine: (Long) -> Unit,
+    onOpenDrawer: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     UserMessageEffect(state.message, snackbarHostState) { onEvent(HomeEvent.MessageShown) }
     Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.app_name)) },
+                navigationIcon = {
+                    IconButton(onClick = onOpenDrawer) {
+                        Icon(Icons.Outlined.Menu, contentDescription = stringResource(R.string.drawer_open))
+                    }
+                },
+            )
+        },
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { padding ->
         if (state.isLoading) {
